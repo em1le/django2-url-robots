@@ -4,3 +4,4 @@
 *.pyc
 
 .tox/
+.DS_Store

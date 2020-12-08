@@ -1,12 +1,14 @@
-import django
 import sre_parse
+from django import get_version
+from distutils.version import StrictVersion
 from sre_constants import LITERAL, AT, AT_END
 
-_NEWEST_DJANGO = float(django.get_version()) >= float(2.0)
+_NEWEST_DJANGO = StrictVersion(get_version()) >= StrictVersion('2.0')
 
 try:
     # Python 3
     from urllib.parse import quote, unquote
+
     unichr = chr
 except ImportError:
     # Python 2
@@ -24,6 +26,7 @@ def robots_decorator(url_function):
     """
     Decorator for django.conf.urls.url
     """
+
     def url_extended(regex, view, kwargs=None, name=None, robots_allow=None):
         resolver_or_pattern = url_function(regex, view, kwargs=kwargs, name=name)
 
