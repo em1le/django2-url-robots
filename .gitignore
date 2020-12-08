@@ -1,7 +1,13 @@
-
 .idea/
 
 *.pyc
 
 .tox/
+
+build/*
+
+dist/*
+
+env/*
+
 .DS_Store
