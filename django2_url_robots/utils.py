@@ -35,7 +35,7 @@ def robots_decorator(url_function):
 
 if _NEWEST_DJANGO is True:
     path = robots_decorator(path)
-    re_path = robots_decorator(path)
+    re_path = robots_decorator(re_path)
 else:
     url = robots_decorator(url)
 
