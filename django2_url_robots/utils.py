@@ -1,5 +1,8 @@
+import django
 import sre_parse
 from sre_constants import LITERAL, AT, AT_END
+
+_NEWEST_DJANGO = float(django.get_version()) >= float(2.0)
 
 try:
     # Python 3
@@ -9,13 +12,12 @@ except ImportError:
     # Python 2
     from urllib import quote, unquote
 
-from django.conf.urls import url
-
 try:
     from django.core.urlresolvers import get_urlconf, get_resolver, RegexURLResolver
+    from django.conf.urls import url
 except ImportError:
-    from django.urls import get_urlconf, get_resolver
-    from django.urls import URLResolver
+    from django.urls import get_urlconf, get_resolver, URLResolver
+    from django.urls import path, re_path
 
 
 def robots_decorator(url_function):
@@ -31,7 +33,11 @@ def robots_decorator(url_function):
     return url_extended
 
 
-url = robots_decorator(url)
+if _NEWEST_DJANGO is True:
+    path = robots_decorator(path)
+    re_path = robots_decorator(path)
+else:
+    url = robots_decorator(url)
 
 
 def create_rules(urlconf=None):
